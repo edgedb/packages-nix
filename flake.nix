@@ -7,7 +7,7 @@
     crane = {
       url = "github:ipetkov/crane";
       inputs.nixpkgs.follows = "nixpkgs";
-    };  
+    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,10 +32,10 @@
           mk_edgedb_server = { source }:
             pkgs.stdenvNoCC.mkDerivation {
               name = "edgedb-server";
-              buildInputs = with pkgs; [ ];
-              nativeBuildInputs = with pkgs;
-                [ zstd ]
-                ++ lib.optionals (!pkgs.stdenv.isDarwin) [ autoPatchelfHook ];
+              buildInputs = [ ];
+              nativeBuildInputs = [ pkgs.zstd ]
+                ++ pkgs.lib.optionals (!pkgs.stdenv.isDarwin)
+                [ pkgs.autoPatchelfHook ];
               dontPatchELF = pkgs.stdenv.isDarwin;
               dontFixup = pkgs.stdenv.isDarwin;
               src = pkgs.fetchurl source;
@@ -66,7 +66,7 @@
                 #   crate can be generated
                 doCheck = false;
               };
-              
+
               # Build *just* the cargo dependencies, so we can reuse
               # all of that work (e.g. via cachix) when running in CI
               cargoArtifacts = craneLib.buildDepsOnly commonArgs;
