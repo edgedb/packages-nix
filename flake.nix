@@ -51,35 +51,24 @@
               inherit (pkgs) lib;
 
               craneLib = crane.lib.${system};
+            in craneLib.buildPackage {
+              strictDeps = true;
+
               src = craneLib.cleanCargoSource (pkgs.fetchgit source);
+              nativeBuildInputs = [ pkgs.pkg-config ];
+              buildInputs = [ pkgs.openssl pkgs.perl ]
+                ++ lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
+              # we use native-tls/vendored, but here we override that so cargo does not try to build it
+              # since it lacks a proper build env
+              OPENSSL_NO_VENDOR = true;
 
-              commonArgs = {
-                inherit src;
-                strictDeps = true;
-
-                nativeBuildInputs = [ pkgs.pkg-config ];
-
-                buildInputs = [ pkgs.openssl pkgs.perl ]
-                  ++ lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
-
-                # we use native-tls/vendored, but here we override that so cargo does not try to build it
-                # since it lacks a proper build env
-                OPENSSL_NO_VENDOR = true;
-
-                # don't check as we rely on GitHub Action tests for correctness
-                # running clippy and tests here would require:
-                # - starting edgedb-server,
-                # - cloning shared-client-testcases git submodule, so shared-client-test
-                #   crate can be generated
-                doCheck = false;
-              };
-
-              # Build *just* the cargo dependencies, so we can reuse
-              # all of that work (e.g. via cachix) when running in CI
-              cargoArtifacts = craneLib.buildDepsOnly commonArgs;
-            in craneLib.buildPackage
-            (commonArgs // { inherit cargoArtifacts; }));
-
+              # don't check as we rely on GitHub Action tests for correctness
+              # running clippy and tests here would require:
+              # - starting edgedb-server,
+              # - cloning shared-client-testcases git submodule, so shared-client-test
+              #   crate can be generated
+              doCheck = false;
+            });
         in {
           packages.edgedb-server = mk_edgedb_server {
             source = {
