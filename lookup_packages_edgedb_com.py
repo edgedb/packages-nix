@@ -7,6 +7,7 @@
 #
 
 import requests
+from typing import Tuple, Any, Callable
 
 platforms = [
     {"nix": "x86_64-linux", "edgedb": "x86_64-unknown-linux-gnu"},
@@ -16,12 +17,33 @@ platforms = [
 ]
 
 
-def package_selector(p) -> bool:
-    return (
-        p["basename"] == "edgedb-server"
-        and p["version_details"]["major"] == 5
-        and p["version_details"]["minor"] == 5
-    )
+basename = "edgedb-server"
+
+
+def find_most_recent(packages) -> Tuple[int, int]:
+    major = 0
+    minor = 0
+    for p in packages:
+        if p["basename"] != basename:
+            continue
+
+        if p["version_details"]["major"] > major:
+            major = p["version_details"]["major"]
+            minor = 0
+
+        if p["version_details"]["minor"] > minor:
+            minor = p["version_details"]["minor"]
+    return (major, minor)
+
+
+def package_selector(version) -> Callable[[Any], bool]:
+    def sel(p) -> bool:
+        return (
+            p["basename"] == basename
+            and p["version_details"]["major"] == version[0]
+            and p["version_details"]["minor"] == version[1]
+        )
+    return sel
 
 
 def install_ref_selector(i) -> bool:
@@ -33,7 +55,8 @@ for platform in platforms:
         f"https://packages.edgedb.com/archive/.jsonindexes/{platform['edgedb']}.json"
     )
     packages = res.json()["packages"]
-    package = next(filter(package_selector, packages))
+    version = find_most_recent(packages)
+    package = next(filter(package_selector(version), packages))
 
     install_ref = next(filter(install_ref_selector, package["installrefs"]))
 
