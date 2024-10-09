@@ -20,9 +20,14 @@ platforms = [
 basename = "edgedb-server"
 
 
-def find_most_recent(packages) -> Tuple[int, int]:
+channel = "" # stable
+# channel = ".nightly"
+
+
+def find_most_recent(packages) -> Tuple[int, int, int]:
     major = 0
     minor = 0
+    revision = 0
     for p in packages:
         if p["basename"] != basename:
             continue
@@ -30,10 +35,16 @@ def find_most_recent(packages) -> Tuple[int, int]:
         if p["version_details"]["major"] > major:
             major = p["version_details"]["major"]
             minor = 0
+            revision = 0
 
         if p["version_details"]["minor"] > minor:
             minor = p["version_details"]["minor"]
-    return (major, minor)
+            revision = 0
+
+        r = int(p["version_details"]["metadata"]["build_revision"])
+        if r > revision:
+            revision = r
+    return (major, minor, revision)
 
 
 def package_selector(version) -> Callable[[Any], bool]:
@@ -42,6 +53,7 @@ def package_selector(version) -> Callable[[Any], bool]:
             p["basename"] == basename
             and p["version_details"]["major"] == version[0]
             and p["version_details"]["minor"] == version[1]
+            and p["version_details"]["metadata"]["build_revision"] == str(version[2])
         )
     return sel
 
@@ -52,7 +64,7 @@ def install_ref_selector(i) -> bool:
 
 for platform in platforms:
     res = requests.get(
-        f"https://packages.edgedb.com/archive/.jsonindexes/{platform['edgedb']}.json"
+        f"https://packages.edgedb.com/archive/.jsonindexes/{platform['edgedb']}{channel}.json"
     )
     packages = res.json()["packages"]
     version = find_most_recent(packages)

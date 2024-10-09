@@ -90,6 +90,26 @@
               };
             }.${system};
           };
+          packages.edgedb-server-nightly = mk_edgedb_server {
+            source = {
+              x86_64-linux = {
+                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu/edgedb-server-5.6+51fd5fe.tar.zst";
+                sha256 = "f3e06e6da9902aef062bd14849e7fbf0b3c30f0c0d136cda6bf05a407b9f8438";
+              };
+              aarch64-linux = {
+                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu/edgedb-server-5.6+01f1f64.tar.zst";
+                sha256 = "f806ddf159eca3fb703861d52e7c343232ee076164d901a7129fb9742ea8ff70";
+              };
+              x86_64-darwin = {
+                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin/edgedb-server-5.6+9d333f3.tar.zst";
+                sha256 = "9a9dbcb6e3feb76bdb2d58e30e99c8a33c321b36a08fbe8d51fce3f162392982";
+              };
+              aarch64-darwin = {
+                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin/edgedb-server-5.6+adb9e77.tar.zst";
+                sha256 = "96fa55deaacaf4b7362c7cef6c1f83704262ccd1b9a69d0674b2bec8f2e9989c";
+              };
+            }.${system};
+          };
 
           packages.edgedb-cli = mk_edgedb_cli {
             source = {
