@@ -93,20 +93,20 @@
           packages.edgedb-server-nightly = mk_edgedb_server {
             source = {
               x86_64-linux = {
-                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu.nightly/edgedb-server-6.0-dev.8863+a0a475a.tar.zst";
-                sha256 = "b2f5f72ea57a42c0178fb2f86b2630c65d787b4128e00086f1f801ac15096e4e";
+                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu.nightly/edgedb-server-6.0-dev.8943+e7d031f.tar.zst";
+                sha256 = "82d0ea41d689d9216afb888cdaaae31f198a71af0cdd1cf1fe6cbaea0740adf3";
               };
               aarch64-linux = {
-                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu.nightly/edgedb-server-6.0-dev.8835+2b65754.tar.zst";
-                sha256 = "d56b6fdb91f8d3dd5ea88a81361f8566805186c72f9c4031d0411ff48c935da1";
+                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu.nightly/edgedb-server-6.0-dev.8943+77f91f5.tar.zst";
+                sha256 = "18275384d795e2868fd7e7e5461b75bc2551aa8436ccb5a9978f48ba18034f79";
               };
               x86_64-darwin = {
-                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin.nightly/edgedb-server-6.0-dev.8865+ef5f171.tar.zst";
-                sha256 = "277f4727e97b8db001065af233bbddd7e4a49300ad34fe698f7666765b1ad98d";
+                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin.nightly/edgedb-server-6.0-dev.8943+c3bb19b.tar.zst";
+                sha256 = "76bda39900927d6779317e6ddf639532b4cf523ed3a85ae704bfa402725d20f2";
               };
               aarch64-darwin = {
-                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin.nightly/edgedb-server-6.0-dev.8865+d0f459d.tar.zst";
-                sha256 = "587254ded2f6e0dae6b644bf5b934d1bf067c73899b8eb91ffa7c6334784c48b";
+                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin.nightly/edgedb-server-6.0-dev.8943+82c590b.tar.zst";
+                sha256 = "96490a3761f8b791d24bb05ec2052e2fece5916d8c3c67042dce494d915bf390";
               };
             }.${system};
           };
