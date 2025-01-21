@@ -55,6 +55,7 @@ def package_selector(version) -> Callable[[Any], bool]:
             and p["version_details"]["minor"] == version[1]
             and p["version_details"]["metadata"]["build_revision"] == str(version[2])
         )
+
     return sel
 
 

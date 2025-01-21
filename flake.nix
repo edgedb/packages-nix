@@ -73,40 +73,40 @@
           packages.edgedb-server = mk_edgedb_server {
             source = {
               x86_64-linux = {
-                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu/edgedb-server-5.6+51fd5fe.tar.zst";
-                sha256 = "f3e06e6da9902aef062bd14849e7fbf0b3c30f0c0d136cda6bf05a407b9f8438";
+                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu/edgedb-server-5.7+a084c4f.tar.zst";
+                sha256 = "9ee607f75e042bba785e520f0125b0486b6d59161f26ae2689d4029f129df6e9";
               };
               aarch64-linux = {
-                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu/edgedb-server-5.6+01f1f64.tar.zst";
-                sha256 = "f806ddf159eca3fb703861d52e7c343232ee076164d901a7129fb9742ea8ff70";
+                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu/edgedb-server-5.7+afc35ce.tar.zst";
+                sha256 = "9a7936b498dcce1bcb77d0ca3c35166d8ffd2134e5756c3c7ecc2b7215485c11";
               };
               x86_64-darwin = {
-                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin/edgedb-server-5.6+9d333f3.tar.zst";
-                sha256 = "9a9dbcb6e3feb76bdb2d58e30e99c8a33c321b36a08fbe8d51fce3f162392982";
+                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin/edgedb-server-5.7+2cade1b.tar.zst";
+                sha256 = "2b452f66a2e5ebbad36e2c282905702db47f7d3df2fcbff8ae13061d1cee7aa5";
               };
               aarch64-darwin = {
-                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin/edgedb-server-5.6+adb9e77.tar.zst";
-                sha256 = "96fa55deaacaf4b7362c7cef6c1f83704262ccd1b9a69d0674b2bec8f2e9989c";
+                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin/edgedb-server-5.7+05319d5.tar.zst";
+                sha256 = "17f0616615ba1203c5faebfabf3d1127f887fe826f612d3eaf1aeca08582b2ce";
               };
             }.${system};
           };
           packages.edgedb-server-nightly = mk_edgedb_server {
             source = {
               x86_64-linux = {
-                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu.nightly/edgedb-server-6.0-dev.8943+e7d031f.tar.zst";
-                sha256 = "82d0ea41d689d9216afb888cdaaae31f198a71af0cdd1cf1fe6cbaea0740adf3";
+                url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu.nightly/edgedb-server-7.0-dev.9145+ddbbf5b.tar.zst";
+                sha256 = "c060c155a4e7fe198c4d751801d3151c9fc59bd8bf90fed2d210e8d6c439abfc";
               };
               aarch64-linux = {
-                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu.nightly/edgedb-server-6.0-dev.8943+77f91f5.tar.zst";
-                sha256 = "18275384d795e2868fd7e7e5461b75bc2551aa8436ccb5a9978f48ba18034f79";
+                url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu.nightly/edgedb-server-7.0-dev.9145+db0d724.tar.zst";
+                sha256 = "930b92f462507a0ba91e43c62c750567ec843b301a765a9396b8cd0d560e1124";
               };
               x86_64-darwin = {
-                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin.nightly/edgedb-server-6.0-dev.8943+c3bb19b.tar.zst";
-                sha256 = "76bda39900927d6779317e6ddf639532b4cf523ed3a85ae704bfa402725d20f2";
+                url = "https://packages.edgedb.com/archive/x86_64-apple-darwin.nightly/edgedb-server-7.0-dev.9145+b2123ff.tar.zst";
+                sha256 = "6861ddb21d22f19911c18f39746de51022c07159c9c94e693b1cfacc98e4a909";
               };
               aarch64-darwin = {
-                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin.nightly/edgedb-server-6.0-dev.8943+82c590b.tar.zst";
-                sha256 = "96490a3761f8b791d24bb05ec2052e2fece5916d8c3c67042dce494d915bf390";
+                url = "https://packages.edgedb.com/archive/aarch64-apple-darwin.nightly/edgedb-server-7.0-dev.9145+b19e5fd.tar.zst";
+                sha256 = "6264a33e0ae58a7dd0fe1bdf16696047b60bda0e9ee20a099e4e33ef1de3889b";
               };
             }.${system};
           };
