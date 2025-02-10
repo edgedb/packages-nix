@@ -1,3 +1,7 @@
+.direnv/
+
 result
 
 .vscode/
+.helix/
+
