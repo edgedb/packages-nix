@@ -8,15 +8,9 @@
       url = "github:ipetkov/crane";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-analyzer-src.follows = "";
-    };
   };
 
-  outputs = inputs@{ flake-parts, nixpkgs, crane, fenix, ... }:
+  outputs = inputs@{ flake-parts, nixpkgs, crane, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         # systems for which you want to build the `perSystem` attributes
@@ -50,25 +44,29 @@
             (let
               inherit (pkgs) lib;
 
-              craneLib = crane.lib.${system};
-            in craneLib.buildPackage {
-              strictDeps = true;
+              craneLib = crane.mkLib pkgs;
 
-              src = craneLib.cleanCargoSource (pkgs.fetchgit source);
-              nativeBuildInputs = [ pkgs.pkg-config ];
-              buildInputs = [ pkgs.openssl pkgs.perl ]
-                ++ lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
-              # we use native-tls/vendored, but here we override that so cargo does not try to build it
-              # since it lacks a proper build env
-              OPENSSL_NO_VENDOR = true;
+              commonArgs = {
+                src = craneLib.cleanCargoSource (pkgs.fetchgit source);
+                strictDeps = true;
 
-              # don't check as we rely on GitHub Action tests for correctness
-              # running clippy and tests here would require:
-              # - starting edgedb-server,
-              # - cloning shared-client-testcases git submodule, so shared-client-test
-              #   crate can be generated
-              doCheck = false;
-            });
+                nativeBuildInputs = [ pkgs.pkg-config ];
+                buildInputs = [ pkgs.openssl pkgs.perl ]
+                  ++ lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
+                # we use native-tls/vendored, but here we override that so cargo does not try to build it
+                # since it lacks a proper build env
+                OPENSSL_NO_VENDOR = true;
+
+                # don't check as we rely on GitHub Action tests for correctness
+                # running clippy and tests here would require:
+                # - starting edgedb-server,
+                # - cloning shared-client-testcases git submodule, so shared-client-test
+                #   crate can be generated
+                doCheck = false;
+              };
+            in craneLib.buildPackage (commonArgs // {
+              cargoArtifacts = craneLib.buildDepsOnly commonArgs;
+            }));
 
             artifacts = import ./artifacts.nix;
         in {
@@ -92,8 +90,8 @@
           packages.edgedb-cli = mk_edgedb_cli {
             source = {
               url = "https://github.com/edgedb/edgedb-cli";
-              rev = "v5.1.0";
-              hash = "sha256-znxAtfSeepLQqkPsEzQBp3INZym5BLap6m29C/9z+h8=";
+              rev = "v5.5.2";
+              hash = "sha256-CSs1Ql0zsGgSmZrlZIfj2pJdtAax7HUlfCq8oTbReng=";
             };
           };
 
