@@ -78,6 +78,9 @@
           packages.edgedb-server-nightly = mk_edgedb_server {
             source = artifacts.edgedb-server-nightly.${system};
           };
+          packages.gel-server-testing = mk_edgedb_server {
+            source = artifacts.gel-server-testing.${system};
+          };
 
           packages.edgedb-cli = mk_edgedb_cli {
             source = {

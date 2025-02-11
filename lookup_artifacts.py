@@ -24,6 +24,9 @@ def main():
     r += "  edgedb-server-nightly = {\n"
     r += generate_artifacts("edgedb-server", ".nightly", platforms)
     r += "  };\n"
+    r += "  gel-server-testing= {\n"
+    r += generate_artifacts("gel-server", ".testing", platforms)
+    r += "  };\n"
     r += "}\n"
     print(r)
 

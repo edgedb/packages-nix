@@ -35,5 +35,23 @@
       sha256 = "a50cd756a2f8ff496a4dcda0d2fcc4f4606ee58e05c21b3175d31e263400b40d";
     };
   };
+  gel-server-testing= {
+    x86_64-linux = {
+      url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu.testing/gel-server-6.0-rc.1+983c12e.tar.zst";
+      sha256 = "27b2cad29a796047decf537ae0816136aeb9f1b63a2518a18ff83ff72a4fcf5c";
+    };
+    aarch64-linux = {
+      url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu.testing/gel-server-6.0-rc.1+52f4400.tar.zst";
+      sha256 = "6a6ddfdb6daf93ef135e139f1263f8c237d15befee12359177513849ba5c828a";
+    };
+    x86_64-darwin = {
+      url = "https://packages.edgedb.com/archive/x86_64-apple-darwin.testing/gel-server-6.0-rc.1+3f43d78.tar.zst";
+      sha256 = "c0374c7de498bfa2b1d94d195f7f8834b4a1b1a311af122f3651ae8fced1b9b2";
+    };
+    aarch64-darwin = {
+      url = "https://packages.edgedb.com/archive/aarch64-apple-darwin.testing/gel-server-6.0-rc.1+673117d.tar.zst";
+      sha256 = "fa6f018a7b41b23aa8c369f90e4a0a63e5d1082bdcd7ba774aa44ad959b17b4a";
+    };
+  };
 }
 
