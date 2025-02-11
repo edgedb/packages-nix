@@ -53,5 +53,15 @@
       sha256 = "fa6f018a7b41b23aa8c369f90e4a0a63e5d1082bdcd7ba774aa44ad959b17b4a";
     };
   };
+  gel-ls= {
+    x86_64-linux = {
+      url = "https://packages.edgedb.com/archive/x86_64-unknown-linux-gnu.nightly/edgedb-ls-7.0-dev.9204+b601c53.tar.zst";
+      sha256 = "bf80c8997c62c44f7678600ad97717fc64cec12de401d4bff57e04f8731a36c5";
+    };
+    aarch64-linux = {
+      url = "https://packages.edgedb.com/archive/aarch64-unknown-linux-gnu.nightly/edgedb-ls-7.0-dev.9204+f0ea229.tar.zst";
+      sha256 = "c2807d81355bd9ecfcf06e8a2a90b206cf020f08cc706ae796e5b15f50005834";
+    };
+  };
 }
 

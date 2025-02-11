@@ -29,9 +29,9 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
 
-          mk_edgedb_server = { source }:
+          mk_artifact = { name, url }:
             pkgs.stdenvNoCC.mkDerivation {
-              name = "edgedb-server";
+              name = name;
               buildInputs = with pkgs; [ ];
               nativeBuildInputs = with pkgs;
                 [ zstd ]
@@ -39,7 +39,7 @@
 
               dontPatchELF = pkgs.stdenv.isDarwin;
               dontFixup = pkgs.stdenv.isDarwin;
-              src = pkgs.fetchurl source;
+              src = pkgs.fetchurl url;
               installPhase = ''
                 mkdir $out
                 cp -r ./* $out
@@ -72,14 +72,21 @@
 
             artifacts = import ./artifacts.nix;
         in {
-          packages.edgedb-server = mk_edgedb_server {
-            source = artifacts.edgedb-server.${system};
+          packages.edgedb-server = mk_artifact {
+            name = "edgedb-server";
+            url = artifacts.edgedb-server.${system};
           };
-          packages.edgedb-server-nightly = mk_edgedb_server {
-            source = artifacts.edgedb-server-nightly.${system};
+          packages.edgedb-server-nightly = mk_artifact {
+            name = "edgedb-server";
+            url = artifacts.edgedb-server-nightly.${system};
           };
-          packages.gel-server-testing = mk_edgedb_server {
-            source = artifacts.gel-server-testing.${system};
+          packages.gel-server-testing = mk_artifact {
+            name = "gel-server";
+            url = artifacts.gel-server-testing.${system};
+          };
+          packages.gel-ls = mk_artifact {
+            name = "gel-ls";
+            url = artifacts.gel-ls.${system};
           };
 
           packages.edgedb-cli = mk_edgedb_cli {

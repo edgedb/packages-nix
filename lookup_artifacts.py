@@ -18,14 +18,21 @@ def main():
     ]
 
     r = "{\n"
+    
     r += "  edgedb-server = {\n"
     r += generate_artifacts("edgedb-server", "", platforms)
     r += "  };\n"
+    
     r += "  edgedb-server-nightly = {\n"
     r += generate_artifacts("edgedb-server", ".nightly", platforms)
     r += "  };\n"
+    
     r += "  gel-server-testing= {\n"
     r += generate_artifacts("gel-server", ".testing", platforms)
+    r += "  };\n"
+    
+    r += "  gel-ls= {\n"
+    r += generate_artifacts("edgedb-ls", ".nightly", platforms)
     r += "  };\n"
     r += "}\n"
     print(r)
@@ -47,9 +54,10 @@ def find_most_recent(basename, packages) -> Tuple[int, int, int]:
             minor = p["version_details"]["minor"]
             revision = 0
 
-        r = int(p["version_details"]["metadata"]["build_revision"])
-        if r > revision:
-            revision = r
+        if r_str := p["version_details"]["metadata"].get("build_revision", None):
+            r = int(r_str)
+            if r > revision:
+                revision = r
     return (major, minor, revision)
 
 
@@ -59,7 +67,7 @@ def package_selector(basename, version) -> Callable[[Any], bool]:
             p["basename"] == basename
             and p["version_details"]["major"] == version[0]
             and p["version_details"]["minor"] == version[1]
-            and p["version_details"]["metadata"]["build_revision"] == str(version[2])
+            and p["version_details"]["metadata"].get("build_revision", None) == str(version[2])
         )
 
     return sel
@@ -78,8 +86,10 @@ def generate_artifacts(basename: str, channel: str, platforms) -> str:
         )
         packages = res.json()["packages"]
         version = find_most_recent(basename, packages)
-        package = next(filter(package_selector(basename, version), packages))
-
+        package = next(filter(package_selector(basename, version), packages), None)
+        if package == None:
+            continue
+            
         install_ref = next(filter(install_ref_selector, package["installrefs"]))
 
         url = "https://packages.edgedb.com" + install_ref["ref"]
